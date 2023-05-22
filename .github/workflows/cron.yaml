@@ -1,0 +1,52 @@
+#file: noinspection SpellCheckingInspection
+
+
+######################
+#   Github Action    #
+######################
+
+name: CRON
+
+on:
+  push:
+  tags:
+    - '*'
+  schedule:
+    - cron: '0 0 * * *' # Everyday
+
+
+jobs:
+
+  # Get data JOB
+  get-data:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Setup NodeJS
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run script
+      - name: RUN
+        run: npm run fetch
+        env:
+          CALENDER_URL: ${{ secrets.CALENDER_URL }}
+
+      # Commit
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4

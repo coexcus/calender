@@ -10,8 +10,9 @@ import icalToJSON from "ical2json";
 import extract from "./extract.js";
 
 
-/* Constants */
-const URL = process.env.CALENDER_URL || process.env.BACKUP_URL;
+/* URL */
+let URL = String(process.env.CALENDER_URL).trim();
+if(!URL.startsWith('https://')) URL = process.env.BACKUP_URL;
 
 
 /* Main */
@@ -33,4 +34,5 @@ async function main(){
 
 }
 
+/* Run */
 main().catch(console.log);
