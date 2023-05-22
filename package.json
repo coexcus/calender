@@ -1,0 +1,18 @@
+{
+  "name": "coexcus-calender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/fetch.js",
+  "type": "module",
+  "scripts": {
+    "fetch": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ical2json": "^3.1.2",
+    "node-fetch": "^3.3.1"
+  }
+}
