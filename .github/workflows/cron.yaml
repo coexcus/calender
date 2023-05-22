@@ -9,8 +9,6 @@ name: CRON
 
 on:
   push:
-  tags:
-    - '*'
   schedule:
     - cron: '0 0 * * *' # Everyday
 
