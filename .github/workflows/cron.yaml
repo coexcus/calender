@@ -16,36 +16,38 @@ on:
 
 jobs:
 
-  # Get data JOB
-  get-data:
-
+  fetch:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
     steps:
-
-      # Checkout
       - name: Checkout
         uses: actions/checkout@v2
-
-      # Setup NodeJS
       - name: Setup NodeJS
         uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      # Install dependencies
       - name: Install dependencies
         run: npm install
-
-      # Run script
       - name: RUN
         run: npm run fetch
         env:
           CALENDER_URL: ${{ secrets.CALENDER_URL }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './www'
 
-      # Commit
-      - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+  deploy:
+    runs-on: ubuntu-latest
+    needs: fetch
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+

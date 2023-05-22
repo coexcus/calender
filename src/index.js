@@ -29,6 +29,7 @@ async function main(){
     const json = extract(rawJSON);
 
     // Write to file
+    if(!fs.existsSync("www")) fs.mkdirSync("www");
     fs.writeFileSync("www/raw-calender.json", JSON.stringify(rawJSON, null, 2));
     fs.writeFileSync("www/calender.json", JSON.stringify(json, null, 2));
 
